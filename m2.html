@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Module 2 — Responsible AI</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --g:      #00c835;
+      --amber:  #f5a524;
+      --red:    #ef4444;
+      --purple: #b89dd4;
+      --blue:   #5ac8fa;
+      --bg:     #0a0d0f;
+      --panel:  #151a1e;
+      --line:   rgba(255,255,255,0.07);
+      --line2:  rgba(255,255,255,0.14);
+      --ink:    #eef1f2;
+      --ink2:   #c6ced2;
+      --mute:   #6d777d;
+      --mute2:  #424a4f;
+    }
+
+    html, body { background: var(--bg); }
+    .reveal .backgrounds { background: var(--bg); }
+
+    .reveal {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    .reveal .slides { text-align: left; }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5 {
+      text-transform: none !important;
+    }
+
+    .reveal .slides section {
+      padding: 0 !important;
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    .top-rule {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px 14px 48px;
+      border-bottom: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+    .top-rule .brand::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--g);
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .body-area {
+      flex: 1 1 auto;
+      padding: 28px 48px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .body-area.center { justify-content: center; }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: #fff;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin: 0 0 0.3em 0;
+      font-weight: 700;
+    }
+    .reveal h1 { font-size: 1.9em; }
+    .reveal h2 { font-size: 1.35em; }
+    .reveal h3 { font-size: 0.85em; font-weight: 600; }
+
+    .reveal p, .reveal li {
+      font-size: 0.55em;
+      line-height: 1.5;
+      color: var(--ink2);
+      margin: 0.2em 0;
+    }
+    .reveal strong { color: #fff; font-weight: 600; }
+
+    .mono, .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.01em;
+    }
+
+    .reveal .progress { color: var(--g); height: 2px; }
+    .reveal .controls { color: var(--g); }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .note-below {
+      margin-top: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+
+    .cover { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .cover .stack {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4em;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+    .cover .stack .l1 { color: var(--blue); }
+    .cover .stack .l2 { color: var(--amber); }
+    .cover .stack .l3 { color: var(--g); }
+    .cover .stack .l4 { color: var(--red); }
+    .cover .stack .sep { color: var(--mute2); font-weight: 300; margin: 0 0.12em; }
+    .cover .sub {
+      margin-top: 20px;
+      font-size: 0.7em;
+      color: var(--ink2);
+      max-width: 44ch;
+      font-weight: 300;
+      line-height: 1.45;
+    }
+    .cover .sub strong { color: #fff; font-weight: 600; }
+
+    .divider {
+      height: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 40px;
+    }
+    .divider .ghost {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 7.5em;
+      font-weight: 700;
+      line-height: 0.85;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--line2);
+      user-select: none;
+    }
+    .divider .body-col .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--g);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .divider .body-col h2 {
+      font-size: 1.8em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .divider .body-col h2 .hi { color: var(--g); }
+    .divider .body-col h2 .hi-r { color: var(--red); }
+    .divider .body-col .sub {
+      margin-top: 12px;
+      max-width: 44ch;
+      color: var(--mute);
+      font-size: 0.62em;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6em;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      max-width: 24ch;
+      color: #fff;
+    }
+    .headline .hi { color: var(--g); }
+    .headline .hi-a { color: var(--amber); }
+    .headline .hi-r { color: var(--red); }
+
+    .lede {
+      margin-top: 18px;
+      font-size: 0.62em;
+      color: var(--mute);
+      max-width: 56ch;
+      font-weight: 300;
+      line-height: 1.55;
+    }
+    .lede strong { color: var(--ink); font-weight: 500; }
+
+    .stat3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 16px; }
+    .stat3 .cell { border-left: 2px solid var(--line2); padding: 4px 0 4px 16px; }
+    .stat3 .cell.g { border-left-color: var(--g); }
+    .stat3 .cell.a { border-left-color: var(--amber); }
+    .stat3 .cell.r { border-left-color: var(--red); }
+    .stat3 .cell.b { border-left-color: var(--blue); }
+    .stat3 .cell .num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.55em;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: -0.035em;
+    }
+    .stat3 .cell .num .u {
+      font-size: 0.5em;
+      color: var(--mute);
+      font-weight: 500;
+      margin-left: 2px;
+    }
+    .stat3 .cell .lbl {
+      margin-top: 10px;
+      font-size: 0.5em;
+      color: var(--ink2);
+      line-height: 1.45;
+    }
+    .stat3 .cell .src {
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .cap-grid.two { grid-template-columns: repeat(2, 1fr); }
+    .cap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 14px 16px;
+      border-radius: 3px;
+    }
+    .cap .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--g);
+      letter-spacing: 0.22em;
+      margin-bottom: 6px;
+    }
+    .cap h3 { font-size: 0.82em; margin: 0 0 6px 0; line-height: 1.15; }
+    .cap p { font-size: 0.48em; color: var(--mute); line-height: 1.45; margin: 0; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 14px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      padding: 18px 20px;
+    }
+    .panel .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 10px;
+    }
+    .panel.red .k { color: var(--red); }
+    .panel.amber .k { color: var(--amber); }
+    .panel h3 { font-size: 0.9em; margin: 0 0 10px 0; }
+    .panel p, .panel li { font-size: 0.52em; }
+
+    .case {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      max-width: 64ch;
+    }
+    .case .co-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+    .case .co-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .case .co-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mute);
+    }
+    .case .big {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2em;
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    .case .big.a { color: var(--amber); }
+    .case .big .u {
+      font-size: 0.36em;
+      color: var(--mute);
+      font-weight: 500;
+      margin-left: 8px;
+      letter-spacing: 0;
+    }
+    .case .metric {
+      font-size: 0.62em;
+      color: var(--ink2);
+      max-width: 54ch;
+      line-height: 1.4;
+    }
+    .case .what {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-size: 0.54em;
+      color: var(--mute);
+      max-width: 64ch;
+      line-height: 1.55;
+    }
+    .case .what strong { color: var(--ink); }
+
+    .pull {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5em;
+      line-height: 1.25;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: -0.025em;
+      max-width: 30ch;
+      position: relative;
+    }
+    .pull::before {
+      content: "\201C";
+      position: absolute;
+      left: -26px;
+      top: -16px;
+      font-size: 2em;
+      color: var(--g);
+      line-height: 1;
+    }
+    .pull .hi { color: var(--g); }
+    .pull .hi-r { color: var(--red); }
+    .pull-attr {
+      margin-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .pull-attr .name { color: var(--ink); }
+
+    .slogan {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25em;
+      line-height: 1.4;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+    }
+    .slogan .ln {
+      display: grid;
+      grid-template-columns: 10em 1fr;
+      align-items: baseline;
+      gap: 16px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .slogan .ln:last-child { border-bottom: none; }
+    .slogan .ln .who { font-weight: 700; }
+    .slogan .ln .verb { color: var(--mute); font-weight: 300; font-style: italic; font-size: 0.7em; }
+    .slogan .c1 .who { color: var(--blue); }
+    .slogan .c2 .who { color: var(--amber); }
+    .slogan .c3 .who { color: var(--g); }
+    .slogan .c4 .who { color: var(--purple); }
+    .slogan .c5 .who { color: var(--red); }
+    .slogan .c6 .who { color: #fff; }
+
+    .reveal table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.5em;
+    }
+    .reveal th, .reveal td {
+      padding: 8px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .reveal th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute);
+      font-weight: 500;
+      padding-top: 0;
+    }
+    .reveal td { color: var(--ink2); }
+    .reveal td strong { color: #fff; }
+    .reveal tbody tr:last-child td { border-bottom: none; }
+    .reveal td.g { color: var(--g); }
+    .reveal td.r { color: var(--red); }
+    .reveal td.a { color: var(--amber); }
+
+    .reveal ul { list-style: none; padding: 0; margin: 0.3em 0; }
+    .reveal ul li { padding-left: 14px; position: relative; margin: 6px 0; }
+    .reveal ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.7em;
+      width: 8px; height: 1px;
+      background: var(--g);
+    }
+    .reveal ul.red li::before { background: var(--red); }
+
+    .end-mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--g);
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 01 COVER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">AI Foundations · Module 02</span>
+    <span>April 2026</span>
+  </div>
+  <div class="body-area">
+    <div class="cover">
+      <div class="stack">
+        <span class="l1">Responsible.</span><span class="sep">·</span><span class="l3">AI.</span>
+      </div>
+      <p class="sub">The human in the loop. When AI decides about loans, hires, and diagnoses, <strong>someone still has to be accountable</strong> — and that someone is you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 WHY THIS MODULE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Why this module</span>
+    <span>02 / 16</span>
+  </div>
+  <div class="body-area center">
+    <span class="eyebrow">The stakes, in one sentence</span>
+    <div class="headline">
+      AI is already deciding who gets <span class="hi-a">hired</span>, <span class="hi-a">loans</span>, and <span class="hi-r">care</span>.
+    </div>
+    <p class="lede">Technical excellence is necessary but not sufficient. Without a foundation of <strong>fairness, accountability, transparency, and privacy</strong>, AI systems amplify past discrimination and cause real harm. This module is about the guardrails — what they are, why they exist, and your role in using them.</p>
+  </div>
+</section>
+
+<!-- 03 DIVIDER 01 — challenges -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part One</span>
+    <span>03 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">01</div>
+      <div class="body-col">
+        <div class="tag">Part One · Ethical challenges</div>
+        <h2>Two problems that <span class="hi-r">don't fix themselves</span>.</h2>
+        <p class="sub">Bias and hallucinations are not bugs in the normal sense. They're properties of how the system learns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 BIAS -->
+<section>
+  <div class="top-rule">
+    <span class="brand">AI bias</span>
+    <span>04 / 16</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">The inherited problem</span>
+    <h2>AI reflects the data it was trained on — including the unfairness in it.</h2>
+    <div class="two-col">
+      <div class="panel amber">
+        <div class="k">Where bias comes from</div>
+        <ul>
+          <li><strong>Historical</strong> — past discrimination baked into the data</li>
+          <li><strong>Representation</strong> — some groups underrepresented in training</li>
+          <li><strong>Measurement</strong> — collection methods favor certain groups</li>
+          <li><strong>Aggregation</strong> — one-size-fits-all models ignore minority patterns</li>
+        </ul>
+      </div>
+      <div class="panel red">
+        <div class="k">What it looks like in the world</div>
+        <ul class="red">
+          <li><strong>Healthcare</strong> — algorithms allocating less care to Black patients</li>
+          <li><strong>Criminal justice</strong> — risk scores with racial bias</li>
+          <li><strong>Hiring</strong> — resume screening favoring male candidates</li>
+          <li><strong>Credit</strong> — lower limits for women (Apple Card, 2019)</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note-below">Bias is not intentional. That's what makes it dangerous — nobody thinks they have to check.</p>
+  </div>
+</section>
+
+<!-- 05 HALLUCINATIONS -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Hallucinations</span>
+    <span>05 / 16</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">When the model gets creative with facts</span>
+    <h2>AI predicts likely words — not true ones.</h2>
+    <div class="two-col">
+      <div class="panel red">
+        <div class="k">Why they happen</div>
+        <ul class="red">
+          <li>LLMs optimize for plausibility, not truth</li>
+          <li>Training data includes misinformation</li>
+          <li>Systems are pressured to always produce an answer</li>
+          <li>Models can't say "I don't know" by default</li>
+        </ul>
+      </div>
+      <div class="panel amber">
+        <div class="k">Real consequences</div>
+        <ul>
+          <li>Lawyers citing non-existent cases in court</li>
+          <li>Students submitting essays with fabricated references</li>
+          <li>Medical misinformation presented confidently</li>
+          <li>Business decisions made on invented data</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lede" style="max-width:64ch; margin-top:18px;"><strong>Prevention:</strong> always verify, cross-reference multiple sources, treat AI as a <em>starting point</em>, and prefer tools with citation capability (NotebookLM, Gemini) for anything you'll act on.</p>
+  </div>
+</section>
+
+<!-- 06 DIVIDER 02 — framework -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part Two</span>
+    <span>06 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">02</div>
+      <div class="body-col">
+        <div class="tag">Part Two · Building responsibility</div>
+        <h2>Six principles. One <span class="hi">moving target</span>.</h2>
+        <p class="sub">Global regulators, standards bodies, and industry coalitions mostly agree on the principles. The hard part is operationalizing them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 SIX PRINCIPLES -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The six core principles</span>
+    <span>07 / 16</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Transparency → accountability → human oversight</span>
+    <h2>The ethical foundation of every AI system worth trusting.</h2>
+    <div class="cap-grid">
+      <div class="cap"><div class="n">01</div><h3>Transparency</h3><p>Understand how an AI system reaches its decisions — to the extent possible.</p></div>
+      <div class="cap"><div class="n">02</div><h3>Accountability</h3><p>Clear human ownership for every AI-driven action and its consequences.</p></div>
+      <div class="cap"><div class="n">03</div><h3>Fairness</h3><p>Equal treatment across groups. Audit for bias. Measure outcomes, not intent.</p></div>
+      <div class="cap"><div class="n">04</div><h3>Privacy</h3><p>Minimize data. Protect personal information. Consent, not assumption.</p></div>
+      <div class="cap"><div class="n">05</div><h3>Safety</h3><p>Prevent foreseeable harm — technical, social, psychological.</p></div>
+      <div class="cap"><div class="n">06</div><h3>Human in the loop</h3><p>Keep meaningful human oversight on any decision that affects people's lives.</p></div>
+    </div>
+    <p class="note-below">IEEE · Partnership on AI · UNESCO · EU AI Act (prohibited uses in force Feb 2025 · high-risk systems Aug 2026) — different texts, same backbone.</p>
+  </div>
+</section>
+
+<!-- 08 GUARDRAILS -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Guardrails</span>
+    <span>08 / 16</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Keeping AI on track</span>
+    <h2>Layered safety mechanisms — not a single switch.</h2>
+    <div class="cap-grid">
+      <div class="cap"><div class="n">LAYER 01</div><h3>Input filters</h3><p>Block harmful or out-of-scope requests before the model sees them.</p></div>
+      <div class="cap"><div class="n">LAYER 02</div><h3>Model-level</h3><p>Training and fine-tuning shape the model's baseline values and refusals.</p></div>
+      <div class="cap"><div class="n">LAYER 03</div><h3>Output filters</h3><p>Screen generated content before it reaches the user — toxicity, PII, violence.</p></div>
+      <div class="cap"><div class="n">LAYER 04</div><h3>Content moderation</h3><p>Remove inappropriate material at the application layer.</p></div>
+      <div class="cap"><div class="n">LAYER 05</div><h3>Safety classifiers</h3><p>Specialized detectors for self-harm, extremism, CSAM, credential leaks.</p></div>
+      <div class="cap"><div class="n">LAYER 06</div><h3>Human review</h3><p>Escalation paths for edge cases. The final fallback that can't be bypassed.</p></div>
+    </div>
+    <p class="note-below">The challenge: balance safety with usefulness. Over-restrictive guardrails block legitimate work; under-restrictive ones create real harm.</p>
+  </div>
+</section>
+
+<!-- 09 DIVIDER 03 — case studies -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part Three</span>
+    <span>09 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">03</div>
+      <div class="body-col">
+        <div class="tag">Part Three · Learning from failure</div>
+        <h2>When safeguards <span class="hi-r">weren't there</span>.</h2>
+        <p class="sub">Two high-profile failures, each with a lesson that shaped the industry's current defaults.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 AMAZON CASE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Case · Amazon recruiting AI</span>
+    <span>10 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="case">
+      <div class="co-head">
+        <span class="co-name">Amazon · 2014 → 2018</span>
+        <span class="co-tag">Hiring · HR automation</span>
+      </div>
+      <div class="big a">10 years</div>
+      <div class="metric">of historical resumes used to train a recruiting model — and the model learned the bias in them.</div>
+      <div class="what">
+        <strong>What happened:</strong> the system downgraded resumes containing the word "women's" and penalized graduates of all-women colleges. It learned that historically, male candidates were preferred — and treated that history as a rule. <strong>The response:</strong> Amazon scrapped the system entirely. They couldn't guarantee the bias could be removed. <strong>The lesson:</strong> training on biased history automates the bias. Always audit outcomes, not just accuracy.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 MICROSOFT TAY -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Case · Microsoft Tay</span>
+    <span>11 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="case">
+      <div class="co-head">
+        <span class="co-name">Microsoft · 2016</span>
+        <span class="co-tag">Conversational AI · Twitter</span>
+      </div>
+      <div class="big">24 hours</div>
+      <div class="metric">from friendly launch to forced shutdown, after coordinated trolls fed the bot racist and extremist content.</div>
+      <div class="what">
+        <strong>What happened:</strong> Tay was designed to learn from Twitter conversations. Trolls exploited the "repeat after me" behavior and the absence of content filters. Within hours the bot was posting deeply offensive content. Microsoft took it offline. <strong>The lesson:</strong> any system that learns from public input and acts in public needs <strong>adversarial testing</strong>, <strong>content filters</strong>, and <strong>rate limits</strong>. Assume users will try to break it — because some will.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 DIVIDER 04 — data and privacy -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part Four</span>
+    <span>12 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">04</div>
+      <div class="body-col">
+        <div class="tag">Part Four · Transparency & privacy</div>
+        <h2>The <span class="hi">black box</span> and the data inside it.</h2>
+        <p class="sub">Two practical problems that show up on the job: unexplainable decisions, and the temptation to feed AI things it shouldn't see.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 BLACK BOX -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The black box problem</span>
+    <span>13 / 16</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Why "because the model said so" doesn't cut it</span>
+    <h2>Modern models can't always explain themselves — but the affected person still deserves an explanation.</h2>
+    <div class="two-col">
+      <div class="panel amber">
+        <div class="k">Why decisions become opaque</div>
+        <ul>
+          <li>Millions of calculations per inference</li>
+          <li>No single rule explains any answer</li>
+          <li>Even developers can't trace the logic</li>
+          <li>Patterns are learned in spaces humans can't see</li>
+        </ul>
+      </div>
+      <div class="panel red">
+        <div class="k">Where it hurts</div>
+        <ul class="red">
+          <li><strong>Credit</strong> — "denied" with no explanation</li>
+          <li><strong>Medical</strong> — AI flags a scan, doctor doesn't know what it saw</li>
+          <li><strong>Hiring</strong> — "not selected", criteria unclear</li>
+          <li><strong>Moderation</strong> — posts removed without reason</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lede" style="max-width:64ch; margin-top:18px;"><strong>What regulators now require:</strong> the right to an explanation, the right to appeal, and evidence the system was audited for fairness. This is why <em>explainability</em> is a skill — not a nice-to-have.</p>
+  </div>
+</section>
+
+<!-- 14 DATA CLASSIFICATION for privacy -->
+<section>
+  <div class="top-rule">
+    <span class="brand">What you can — and can't — put into AI</span>
+    <span>14 / 16</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Data privacy in practice</span>
+    <h2>When you paste it into ChatGPT, you're sharing it with more than ChatGPT.</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Data type</th>
+          <th>Public AI (ChatGPT, Gemini)</th>
+          <th>Enterprise / approved AI tool</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Public information</strong></td><td class="g">Allowed</td><td class="g">Allowed</td></tr>
+        <tr><td><strong>Internal non-sensitive</strong></td><td class="a">Strip identifying details</td><td class="g">Allowed</td></tr>
+        <tr><td><strong>Client data</strong></td><td class="r">Never</td><td class="a">With approval</td></tr>
+        <tr><td><strong>Personal employee data</strong></td><td class="r">Never</td><td class="a">With approval</td></tr>
+        <tr><td><strong>Passwords, API keys, credentials</strong></td><td class="r">Never</td><td class="r">Never</td></tr>
+      </tbody>
+    </table>
+    <p class="note-below">Pseudonymize by default. "Private mode" is a UI affordance — not a data-protection guarantee.</p>
+  </div>
+</section>
+
+<!-- 15 DO / DON'T -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The short list</span>
+    <span>15 / 16</span>
+  </div>
+  <div class="body-area center">
+    <span class="eyebrow">Keep these six rules within reach</span>
+    <div class="slogan">
+      <div class="ln c3"><span class="who">Verify</span><span class="verb">every fact, every citation, every number before you publish.</span></div>
+      <div class="ln c1"><span class="who">Minimize</span><span class="verb">the data. Only share what the task actually needs.</span></div>
+      <div class="ln c2"><span class="who">Anonymize</span><span class="verb">names, IDs, and specifics when you ask for help.</span></div>
+      <div class="ln c4"><span class="who">Consent</span><span class="verb">for photos, recordings, and personal stories — always.</span></div>
+      <div class="ln c5"><span class="who">Never share</span><span class="verb">passwords, keys, client data, or proprietary code with public tools.</span></div>
+      <div class="ln c6"><span class="who">Be transparent</span><span class="verb">when AI meaningfully shaped your work.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 CLOSER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">End of Module 02</span>
+    <span>16 / 16</span>
+  </div>
+  <div class="body-area">
+    <div class="cover">
+      <div class="end-mark">// TAKE HOME</div>
+      <div class="stack" style="font-size:1.9em;">
+        <span class="l1">Verify.</span><br/>
+        <span class="l2">Respect.</span><br/>
+        <span class="l3">Own the decision.</span>
+      </div>
+      <p class="sub" style="max-width:52ch;">
+        AI can draft, suggest, and accelerate — but accountability doesn't transfer. The human in the loop is <strong>not a compliance checkbox</strong>. It's the job.
+      </p>
+      <p class="sub" style="max-width:54ch; margin-top:16px; color:var(--mute);">
+        <strong style="color:var(--g);">Next up · Module 03</strong> — the tools of the trade. <strong style="color:var(--g);">Module 04</strong> — deepfakes, your rights, and AI at work.
+      </p>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: false,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'fade',
+    backgroundTransition: 'none',
+    width: 1280,
+    height: 800,
+    margin: 0.0,
+    minScale: 0.3,
+    maxScale: 2.0,
+  });
+</script>
+</body>
+</html>

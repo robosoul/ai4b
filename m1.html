@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Module 1 — Demystifying AI</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --g:      #00c835;
+      --g-dim:  rgba(0,200,53,0.1);
+      --g-line: rgba(0,200,53,0.3);
+      --amber:  #f5a524;
+      --red:    #ef4444;
+      --purple: #b89dd4;
+      --blue:   #5ac8fa;
+
+      --bg:     #0a0d0f;
+      --panel:  #151a1e;
+      --line:   rgba(255,255,255,0.07);
+      --line2:  rgba(255,255,255,0.14);
+      --ink:    #eef1f2;
+      --ink2:   #c6ced2;
+      --mute:   #6d777d;
+      --mute2:  #424a4f;
+    }
+
+    html, body { background: var(--bg); }
+    .reveal .backgrounds { background: var(--bg); }
+
+    .reveal {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    .reveal .slides { text-align: left; }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5 {
+      text-transform: none !important;
+    }
+
+    .reveal .slides section {
+      padding: 0 !important;
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    .top-rule {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px 14px 48px;
+      border-bottom: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+    .top-rule .brand::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--g);
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .body-area {
+      flex: 1 1 auto;
+      padding: 28px 48px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .body-area.center { justify-content: center; }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: #fff;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin: 0 0 0.3em 0;
+      font-weight: 700;
+    }
+    .reveal h1 { font-size: 1.9em; }
+    .reveal h2 { font-size: 1.35em; }
+    .reveal h3 { font-size: 0.85em; font-weight: 600; }
+
+    .reveal p, .reveal li {
+      font-size: 0.55em;
+      line-height: 1.5;
+      color: var(--ink2);
+      margin: 0.2em 0;
+    }
+    .reveal strong { color: #fff; font-weight: 600; }
+
+    .mono, .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.01em;
+    }
+
+    .reveal .progress { color: var(--g); height: 2px; }
+    .reveal .controls { color: var(--g); }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .eyebrow.mute { color: var(--mute); }
+
+    .note-below {
+      margin-top: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+
+    .cover { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .cover .stack {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4em;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+    .cover .stack .l1 { color: var(--blue); }
+    .cover .stack .l2 { color: var(--amber); }
+    .cover .stack .l3 { color: var(--g); }
+    .cover .stack .sep { color: var(--mute2); font-weight: 300; margin: 0 0.12em; }
+    .cover .sub {
+      margin-top: 20px;
+      font-size: 0.7em;
+      color: var(--ink2);
+      max-width: 40ch;
+      font-weight: 300;
+      line-height: 1.45;
+    }
+    .cover .sub strong { color: #fff; font-weight: 600; }
+
+    .divider {
+      height: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 40px;
+    }
+    .divider .ghost {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 7.5em;
+      font-weight: 700;
+      line-height: 0.85;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--line2);
+      user-select: none;
+    }
+    .divider .body-col .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--g);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .divider .body-col h2 {
+      font-size: 1.8em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .divider .body-col h2 .hi { color: var(--g); }
+    .divider .body-col .sub {
+      margin-top: 12px;
+      max-width: 44ch;
+      color: var(--mute);
+      font-size: 0.62em;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6em;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      max-width: 24ch;
+      color: #fff;
+    }
+    .headline .hi { color: var(--g); }
+    .headline .hi-a { color: var(--amber); }
+    .headline .hi-b { color: var(--blue); }
+
+    .lede {
+      margin-top: 18px;
+      font-size: 0.62em;
+      color: var(--mute);
+      max-width: 56ch;
+      font-weight: 300;
+      line-height: 1.55;
+    }
+    .lede strong { color: var(--ink); font-weight: 500; }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .tl-col { position: relative; padding-top: 22px; }
+    .tl-col::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--mute2);
+    }
+    .tl-col::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 9px;
+      right: -32px;
+      height: 2px;
+      background: var(--mute2);
+    }
+    .tl-col:last-child::after { display: none; }
+    .tl-col.now::before  { background: var(--g); }
+    .tl-col.next::before { background: var(--amber); }
+    .tl-col .era {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 6px;
+    }
+    .tl-col.now  .era { color: var(--g); }
+    .tl-col.next .era { color: var(--amber); }
+    .tl-col h3 { font-size: 0.95em; margin-bottom: 6px; }
+    .tl-col p { font-size: 0.52em; color: var(--mute); line-height: 1.45; }
+
+    .stat3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 16px; }
+    .stat3 .cell { border-left: 2px solid var(--line2); padding: 4px 0 4px 16px; }
+    .stat3 .cell.g { border-left-color: var(--g); }
+    .stat3 .cell.a { border-left-color: var(--amber); }
+    .stat3 .cell.r { border-left-color: var(--red); }
+    .stat3 .cell.b { border-left-color: var(--blue); }
+    .stat3 .cell .num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.7em;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: -0.035em;
+    }
+    .stat3 .cell .num .u {
+      font-size: 0.5em;
+      color: var(--mute);
+      font-weight: 500;
+      margin-left: 2px;
+    }
+    .stat3 .cell .lbl {
+      margin-top: 10px;
+      font-size: 0.5em;
+      color: var(--ink2);
+      line-height: 1.45;
+    }
+    .stat3 .cell .src {
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+
+    .lvl-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 10px; }
+    .lvl-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 2px solid var(--g);
+      padding: 16px 18px;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+    }
+    .lvl-card.c1 { border-top-color: var(--blue); }
+    .lvl-card.c2 { border-top-color: var(--amber); }
+    .lvl-card.c3 { border-top-color: var(--g); }
+    .lvl-card.c4 { border-top-color: var(--purple); }
+    .lvl-card .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--mute);
+      letter-spacing: 0.25em;
+      margin-bottom: 4px;
+    }
+    .lvl-card h3 { font-size: 1.05em; margin: 0 0 4px 0; }
+    .lvl-card.c1 h3 { color: var(--blue); }
+    .lvl-card.c2 h3 { color: var(--amber); }
+    .lvl-card.c3 h3 { color: var(--g); }
+    .lvl-card.c4 h3 { color: var(--purple); }
+    .lvl-card .analogy {
+      font-size: 0.48em;
+      color: var(--mute);
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .lvl-card .def {
+      font-size: 0.5em;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .lvl-card .ex-k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute2);
+      margin-top: auto;
+      margin-bottom: 4px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+    .lvl-card .ex { font-size: 0.48em; color: var(--mute); line-height: 1.45; }
+
+    .slogan {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4em;
+      line-height: 1.45;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+    }
+    .slogan .ln {
+      display: grid;
+      grid-template-columns: 8em 1fr;
+      align-items: baseline;
+      gap: 16px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .slogan .ln:last-child { border-bottom: none; }
+    .slogan .ln .who { font-weight: 700; }
+    .slogan .ln .verb { color: var(--mute); font-weight: 300; font-style: italic; font-size: 0.65em; }
+    .slogan .c1 .who { color: var(--blue); }
+    .slogan .c2 .who { color: var(--amber); }
+    .slogan .c3 .who { color: var(--g); }
+    .slogan .c4 .who { color: var(--purple); }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .cap-grid.two { grid-template-columns: repeat(2, 1fr); }
+    .cap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 14px 16px;
+      border-radius: 3px;
+    }
+    .cap .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--g);
+      letter-spacing: 0.22em;
+      margin-bottom: 6px;
+    }
+    .cap h3 { font-size: 0.75em; margin: 0 0 6px 0; line-height: 1.15; }
+    .cap p { font-size: 0.48em; color: var(--mute); line-height: 1.45; margin: 0; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 14px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      padding: 18px 20px;
+    }
+    .panel .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 10px;
+    }
+    .panel.amber .k { color: var(--amber); }
+    .panel h3 { font-size: 0.9em; margin: 0 0 10px 0; }
+    .panel p, .panel li { font-size: 0.52em; }
+    .panel code {
+      display: block;
+      font-size: 0.5em;
+      color: var(--ink);
+      background: #0a0d0f;
+      padding: 8px 12px;
+      margin-top: 10px;
+      border-left: 2px solid var(--g);
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    .panel.amber code { border-left-color: var(--amber); }
+
+    .pull {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5em;
+      line-height: 1.25;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: -0.025em;
+      max-width: 28ch;
+      position: relative;
+    }
+    .pull::before {
+      content: "\201C";
+      position: absolute;
+      left: -26px;
+      top: -16px;
+      font-size: 2em;
+      color: var(--g);
+      line-height: 1;
+    }
+    .pull .hi { color: var(--g); }
+    .pull-attr {
+      margin-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .pull-attr .name { color: var(--ink); }
+
+    .steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 14px; }
+    .step {
+      padding: 14px 16px;
+      border-left: 2px solid var(--g);
+      background: var(--panel);
+      border-radius: 0 3px 3px 0;
+    }
+    .step .sn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: var(--g);
+      margin-bottom: 6px;
+    }
+    .step h3 { font-size: 0.78em; margin-bottom: 6px; }
+    .step p { font-size: 0.48em; color: var(--mute); line-height: 1.5; margin: 0; }
+
+    .reveal table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.5em;
+    }
+    .reveal th, .reveal td {
+      padding: 8px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .reveal th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute);
+      font-weight: 500;
+      padding-top: 0;
+    }
+    .reveal td { color: var(--ink2); }
+    .reveal td strong { color: #fff; }
+    .reveal tbody tr:last-child td { border-bottom: none; }
+
+    .reveal ul { list-style: none; padding: 0; margin: 0.3em 0; }
+    .reveal ul li { padding-left: 14px; position: relative; margin: 6px 0; }
+    .reveal ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.7em;
+      width: 8px; height: 1px;
+      background: var(--g);
+    }
+
+    .end-mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--g);
+      margin-bottom: 14px;
+    }
+
+    .nested-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .nest {
+      width: 100%;
+      border: 1px solid var(--line2);
+      padding: 10px 14px;
+      text-align: center;
+      position: relative;
+    }
+    .nest + .nest { margin-top: -1px; }
+    .nest.l1 { border-color: var(--mute); background: rgba(109,119,125,0.06); max-width: 92%; }
+    .nest.l2 { border-color: var(--blue); background: rgba(90,200,250,0.06); max-width: 72%; }
+    .nest.l3 { border-color: var(--amber); background: rgba(245,165,36,0.06); max-width: 54%; }
+    .nest.l4 { border-color: var(--g); background: rgba(0,200,53,0.08); max-width: 36%; }
+    .nest .ttl {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9em;
+      font-weight: 700;
+      color: #fff;
+    }
+    .nest.l1 .ttl { color: var(--ink); }
+    .nest.l2 .ttl { color: var(--blue); }
+    .nest.l3 .ttl { color: var(--amber); }
+    .nest.l4 .ttl { color: var(--g); }
+    .nest .sub {
+      font-size: 0.45em;
+      color: var(--mute);
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .ctx-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 14px;
+      align-items: stretch;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 01 COVER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">AI Foundations · Module 01</span>
+    <span>April 2026</span>
+  </div>
+  <div class="body-area">
+    <div class="cover">
+      <div class="stack">
+        <span class="l1">Demystifying</span><span class="sep">·</span><span class="l3">AI.</span>
+      </div>
+      <p class="sub">How we got here, what the words actually mean, and <strong>why this decade is different</strong> from every AI hype cycle before it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 AGENDA -->
+<section>
+  <div class="top-rule">
+    <span class="brand">What we'll cover</span>
+    <span>02 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Agenda</span>
+    <h2>Four questions. One working mental model.</h2>
+    <div class="cap-grid" style="margin-top:22px;">
+      <div class="cap"><div class="n">01</div><h3>Where did AI come from?</h3><p>Seventy years of waves — and why this one didn't crash.</p></div>
+      <div class="cap"><div class="n">02</div><h3>What are ML, DL, GenAI?</h3><p>The family tree, the recipe, and the cake.</p></div>
+      <div class="cap"><div class="n">03</div><h3>How do modern LLMs work?</h3><p>Training vs. inference. Context windows. Cutoffs.</p></div>
+      <div class="cap"><div class="n">04</div><h3>What does it actually cost?</h3><p>Money, time, and carbon — the numbers nobody puts on the landing page.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 TIMELINE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The journey of AI</span>
+    <span>03 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">1950 → today</span>
+    <h2>Three eras of artificial intelligence.</h2>
+    <div class="timeline">
+      <div class="tl-col">
+        <div class="era">1950s – 1980s · Symbolic</div>
+        <h3>Hand-coded rules</h3>
+        <p>Experts wrote logic by hand. ELIZA, early chess engines. Couldn't handle messy reality.</p>
+      </div>
+      <div class="tl-col">
+        <div class="era">1990s – 2010s · Statistical ML</div>
+        <h3>Learning from data</h3>
+        <p>Spam filters, recommendation engines. Needed huge labeled datasets to work well.</p>
+      </div>
+      <div class="tl-col now">
+        <div class="era">2012 → today · Deep learning</div>
+        <h3>Neural networks at scale</h3>
+        <p>Many-layer networks, massive datasets, GPU acceleration. AlphaGo, ChatGPT, image generators.</p>
+      </div>
+    </div>
+    <p class="note-below">1956 Dartmouth · 1997 Deep Blue · 2016 AlphaGo · 2022 ChatGPT</p>
+  </div>
+</section>
+
+<!-- 04 WHY NOW -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Why this wave didn't crash</span>
+    <span>04 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">The perfect storm</span>
+    <h2>Three forces arrived in the same decade.</h2>
+    <div class="stat3">
+      <div class="cell g">
+        <div class="num">Data</div>
+        <div class="lbl">The internet produced more text, images, and code than any prior civilization — a training set that didn't exist before 2010.</div>
+        <div class="src">Internet · Web · Social</div>
+      </div>
+      <div class="cell a">
+        <div class="num">GPUs</div>
+        <div class="lbl">Graphics cards built for gaming and crypto turned out to be ideal for training neural networks.</div>
+        <div class="src">NVIDIA · CUDA</div>
+      </div>
+      <div class="cell b">
+        <div class="num">200×</div>
+        <div class="lbl">NVIDIA's market value rose more than 200-fold over the last decade — the symbol of the hardware boom powering modern AI.</div>
+        <div class="src">Market cap · 2014 → today</div>
+      </div>
+    </div>
+    <p class="note-below">None of these on their own would have been enough. All three together changed what was possible.</p>
+  </div>
+</section>
+
+<!-- 05 DIVIDER 01 -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part One</span>
+    <span>05 / 18</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">01</div>
+      <div class="body-col">
+        <div class="tag">Part One · The words</div>
+        <h2>AI, ML, DL, GenAI — <span class="hi">what's what</span>.</h2>
+        <p class="sub">These terms get used interchangeably. They mean different things. Knowing which is which is the first unlock.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 THREE KINDS ANI/AGI/ASI -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Three levels of AI</span>
+    <span>06 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Narrow → General → Super</span>
+    <h2>Today's AI is narrow. The rest is aspiration.</h2>
+    <div class="lvl-row">
+      <div class="lvl-card c1">
+        <div class="num">ANI · TODAY</div>
+        <h3>Narrow</h3>
+        <div class="analogy">Good at one thing.</div>
+        <div class="def">Excellent at specific tasks. Cannot transfer knowledge across domains.</div>
+        <div class="ex-k">Examples</div>
+        <div class="ex">Siri · Google Translate · Netflix recommendations · every LLM you use today.</div>
+      </div>
+      <div class="lvl-card c2">
+        <div class="num">AGI · THE GOAL</div>
+        <h3>General</h3>
+        <div class="analogy">Good at everything humans are.</div>
+        <div class="def">Human-level intelligence across any domain. Can learn and adapt flexibly.</div>
+        <div class="ex-k">Status</div>
+        <div class="ex">Does not exist. Active target of OpenAI, Anthropic, DeepMind, others.</div>
+      </div>
+      <div class="lvl-card c3">
+        <div class="num">ASI · SPECULATION</div>
+        <h3>Super</h3>
+        <div class="analogy">Beyond human ability.</div>
+        <div class="def">Surpasses humans in all areas. Purely theoretical.</div>
+        <div class="ex-k">Status</div>
+        <div class="ex">Science fiction territory. Subject of debate — not engineering yet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 THE FAMILY TREE (nested) -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The family tree</span>
+    <span>07 / 18</span>
+  </div>
+  <div class="body-area center">
+    <span class="eyebrow">Russian nesting dolls</span>
+    <h2>Each term lives inside the one before it.</h2>
+    <div class="nested-box">
+      <div class="nest l1">
+        <div class="ttl">Artificial Intelligence</div>
+        <div class="sub">Machines simulating human intelligence</div>
+      </div>
+      <div class="nest l2">
+        <div class="ttl">Machine Learning</div>
+        <div class="sub">Learns from data, not rules</div>
+      </div>
+      <div class="nest l3">
+        <div class="ttl">Deep Learning</div>
+        <div class="sub">Multi-layer neural networks</div>
+      </div>
+      <div class="nest l4">
+        <div class="ttl">GenAI · LLMs</div>
+        <div class="sub">Creates new content</div>
+      </div>
+    </div>
+    <p class="lede" style="text-align:center; margin-left:auto; margin-right:auto;">ChatGPT is a GenAI, which is a kind of Deep Learning, which is a kind of Machine Learning, which is a kind of AI. All four statements are correct.</p>
+  </div>
+</section>
+
+<!-- 08 TRADITIONAL vs ML -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Rules vs. patterns</span>
+    <span>08 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">A different kind of software</span>
+    <h2>The fundamental shift: from coding rules to learning from data.</h2>
+    <div class="two-col">
+      <div class="panel amber">
+        <div class="k">Traditional software</div>
+        <h3>You write the rules.</h3>
+        <code>IF temperature > 30°C
+THEN turn on cooling
+ELSE turn off cooling</code>
+        <ul>
+          <li>Deterministic · same input → same output</li>
+          <li>Logic is explicit and auditable</li>
+          <li>Update by changing code</li>
+          <li>Test by checking every path</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="k">ML software</div>
+        <h3>The system learns the rules.</h3>
+        <code>Learn from 1M examples of
+temperature/comfort data →
+predict optimal settings</code>
+        <ul>
+          <li>Probabilistic · same input may produce different output</li>
+          <li>Logic is learned, not written</li>
+          <li>Update by retraining with new data</li>
+          <li>Test by statistical validation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 THREE KINDS OF ML -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Three kinds of machine learning</span>
+    <span>09 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">How does it learn?</span>
+    <h2>Three answers, three kinds of ML.</h2>
+    <div class="lvl-row">
+      <div class="lvl-card c1">
+        <div class="num">KIND 01</div>
+        <h3>Supervised</h3>
+        <div class="analogy">Flashcards with answers on the back.</div>
+        <div class="def">Learn from labeled examples. Each training example has an input and the correct output.</div>
+        <div class="ex-k">In your life</div>
+        <div class="ex">Spam filters · image classification · credit scoring.</div>
+      </div>
+      <div class="lvl-card c2">
+        <div class="num">KIND 02</div>
+        <h3>Unsupervised</h3>
+        <div class="analogy">Sorting coins without knowing their values.</div>
+        <div class="def">Find patterns in unlabeled data. The system groups, clusters, compresses.</div>
+        <div class="ex-k">In your life</div>
+        <div class="ex">Customer segmentation · anomaly detection · topic clustering.</div>
+      </div>
+      <div class="lvl-card c3">
+        <div class="num">KIND 03</div>
+        <h3>Reinforcement</h3>
+        <div class="analogy">Training a dog with treats.</div>
+        <div class="def">Learn through trial, error, and reward signals over time.</div>
+        <div class="ex-k">In your life</div>
+        <div class="ex">AlphaGo · game-playing agents · robotics · RLHF for LLMs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 ALGORITHM vs MODEL -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Algorithm vs. model</span>
+    <span>10 / 18</span>
+  </div>
+  <div class="body-area center">
+    <span class="eyebrow">The recipe and the cake</span>
+    <div class="slogan">
+      <div class="ln c2"><span class="who">Algorithm</span><span class="verb">is the recipe.</span></div>
+      <div class="ln c1"><span class="who">Data</span><span class="verb">is the ingredients.</span></div>
+      <div class="ln c3"><span class="who">Model</span><span class="verb">is the cake you baked.</span></div>
+    </div>
+    <p class="lede">An algorithm tells a computer how to solve a problem. A model is what you get after running the algorithm on real data. Two teams with the same algorithm and different data produce different models.</p>
+  </div>
+</section>
+
+<!-- 11 DIVIDER 02 -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part Two</span>
+    <span>11 / 18</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">02</div>
+      <div class="body-col">
+        <div class="tag">Part Two · How LLMs work</div>
+        <h2>Training, inference, and the <span class="hi">working memory</span>.</h2>
+        <p class="sub">The three ideas that explain most of what you experience when you use ChatGPT, Claude, or Gemini.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 TRAINING vs INFERENCE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Training vs. inference</span>
+    <span>12 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Learning vs. performing</span>
+    <h2>Two phases. Very different economics.</h2>
+    <div class="two-col">
+      <div class="panel amber">
+        <div class="k">Training · learning</div>
+        <h3>A student studying to become a doctor.</h3>
+        <ul>
+          <li>Months of computation</li>
+          <li>Millions of dollars</li>
+          <li>Terabytes of data</li>
+          <li>Thousands of GPUs</li>
+          <li>Happens once, or periodically</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="k">Inference · performing</div>
+        <h3>The doctor diagnosing a patient.</h3>
+        <ul>
+          <li>Milliseconds to seconds per request</li>
+          <li>Relatively cheap per call</li>
+          <li>Happens every time you prompt</li>
+          <li>What you actually pay for as a user</li>
+          <li>Model is frozen — not learning from you</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note-below">Common misconception: "The AI is learning from me right now." No — it's applying patterns it already learned.</p>
+  </div>
+</section>
+
+<!-- 13 PREDICTIVE vs GENERATIVE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Two paradigms of AI</span>
+    <span>13 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Analyzer vs. creator</span>
+    <h2>Predictive AI decides. Generative AI creates.</h2>
+    <div class="two-col">
+      <div class="panel amber">
+        <div class="k">Predictive · the analyzer</div>
+        <h3>Sorts. Scores. Flags.</h3>
+        <p>Learns decision boundaries between categories. Outputs a class, a score, a yes/no.</p>
+        <ul>
+          <li>Spam filters · fraud detection</li>
+          <li>Credit scoring · medical diagnosis</li>
+          <li>Recommendation engines</li>
+        </ul>
+        <p style="margin-top:10px;"><strong>Easier to measure.</strong> Easier to validate. Can be overconfident.</p>
+      </div>
+      <div class="panel">
+        <div class="k">Generative · the creator</div>
+        <h3>Writes. Draws. Codes.</h3>
+        <p>Learns the distribution of its training data and samples new outputs from it.</p>
+        <ul>
+          <li>ChatGPT, Claude · text</li>
+          <li>DALL·E, Midjourney · images</li>
+          <li>GitHub Copilot, Cursor · code</li>
+        </ul>
+        <p style="margin-top:10px;"><strong>Harder to validate.</strong> Can "hallucinate" — produce plausible but false output.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 LLMS -->
+<section>
+  <div class="top-rule">
+    <span class="brand">What makes LLMs different</span>
+    <span>14 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">The game changer</span>
+    <h2>One model. Countless tasks.</h2>
+    <div class="stat3">
+      <div class="cell g">
+        <div class="num">1T<span class="u">+ params</span></div>
+        <div class="lbl">Frontier LLMs encode billions to trillions of learned patterns — the "weights" of the network.</div>
+        <div class="src">GPT-4 · Claude · Gemini</div>
+      </div>
+      <div class="cell b">
+        <div class="num">Internet<span class="u">-scale</span></div>
+        <div class="lbl">Pre-trained on huge text corpora by predicting the next word, over and over, for billions of steps.</div>
+        <div class="src">Common Crawl · books · code</div>
+      </div>
+      <div class="cell a">
+        <div class="num">General<span class="u">-purpose</span></div>
+        <div class="lbl">Before: narrow task-specific models. Now: one model that translates, summarizes, reasons, codes, explains.</div>
+        <div class="src">The LLM revolution</div>
+      </div>
+    </div>
+    <p class="note-below">2020 GPT-3 · 2022 ChatGPT · 2023 GPT-4 · 2024 Claude 3.5, Llama 3, Gemini 1.5 · 2025 GPT-5, Claude 4, Gemini 2.5</p>
+  </div>
+</section>
+
+<!-- 15 CONTEXT WINDOW & KNOWLEDGE CUTOFF -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The two limits that shape every answer</span>
+    <span>15 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Working memory · frozen knowledge</span>
+    <h2>What the model sees and what the model knows.</h2>
+    <div class="ctx-row">
+      <div class="panel">
+        <div class="k">Context window</div>
+        <h3>Working memory, measured in tokens.</h3>
+        <p>The maximum text the model can "see" at once — your prompt plus its response. A token ≈ 0.75 words.</p>
+        <ul>
+          <li>GPT-4 · 128K tokens (~96K words)</li>
+          <li>GPT-5 · 400K tokens</li>
+          <li>Claude 4 · 200K – 1M tokens</li>
+          <li>Gemini 2.5 Pro · 2M tokens</li>
+        </ul>
+        <p style="margin-top:10px;"><strong>Why it matters:</strong> long documents need splitting, early conversation gets forgotten.</p>
+      </div>
+      <div class="panel amber">
+        <div class="k">Knowledge cutoff</div>
+        <h3>An encyclopedia with a publication date.</h3>
+        <p>The latest date in the model's training data. Everything after is unknown unless the model can search the web.</p>
+        <ul>
+          <li>GPT-5 · Oct 2024</li>
+          <li>Claude 4.5 · Apr 2025</li>
+          <li>Gemini 2.5 · Jan 2025</li>
+          <li>Llama 4 · Aug 2024</li>
+        </ul>
+        <p style="margin-top:10px;"><strong>Why it matters:</strong> current events, new laws, new libraries — the model doesn't know them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 GIGO -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The one rule that governs everything</span>
+    <span>16 / 18</span>
+  </div>
+  <div class="body-area center">
+    <span class="eyebrow">Garbage in, garbage out</span>
+    <div class="pull">
+      AI is only as good as the data it was <span class="hi">trained on</span>.
+    </div>
+    <div class="pull-attr"><span class="name">GIGO principle</span> · the oldest law in computing, rediscovered</div>
+    <p style="margin-top:20px; max-width:60ch; color:var(--mute); font-size:0.58em; line-height:1.55;">
+      Biased data produces biased models. Incomplete data produces blind spots. Mislabeled data teaches wrong answers confidently. <strong>Amazon's recruiting AI</strong> showed bias against women because it learned from ten years of male-dominated hiring. Quality beats quantity — every time.
+    </p>
+  </div>
+</section>
+
+<!-- 17 TRUE COST -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The true cost of AI</span>
+    <span>17 / 18</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Money · time · carbon</span>
+    <h2>The numbers that don't appear on the landing page.</h2>
+    <div class="stat3">
+      <div class="cell g">
+        <div class="num">~$500M</div>
+        <div class="lbl">Estimated training cost of a 2025 frontier model (GPT-5 class). GPT-3 cost ~$4.6M in 2020 — a hundredfold increase in five years.</div>
+        <div class="src">Training · 2020 → 2025</div>
+      </div>
+      <div class="cell a">
+        <div class="num">~$100B<span class="u">+</span></div>
+        <div class="lbl">Enterprise AI spend in 2025 — training, inference, and infrastructure combined. Inference at scale is a utility-bill-sized operation.</div>
+        <div class="src">IDC · Enterprise AI · 2025</div>
+      </div>
+      <div class="cell r">
+        <div class="num">280t<span class="u"> CO₂</span></div>
+        <div class="lbl">CO₂ emissions of training one large model — roughly the lifetime emissions of five cars. Data centers use ~1% of global electricity.</div>
+        <div class="src">Environmental · peer-reviewed</div>
+      </div>
+    </div>
+    <p class="note-below">Efficient algorithms · renewable power · model compression · edge inference — the next decade's engineering fight.</p>
+  </div>
+</section>
+
+<!-- 18 CLOSER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">End of Module 01</span>
+    <span>18 / 18</span>
+  </div>
+  <div class="body-area">
+    <div class="cover">
+      <div class="end-mark">// TAKE HOME</div>
+      <div class="stack" style="font-size:2em;">
+        <span class="l1">Know the words.</span><br/>
+        <span class="l2">Respect the limits.</span><br/>
+        <span class="l3">Judge the output.</span>
+      </div>
+      <p class="sub" style="max-width:50ch;">
+        AI is not magic — it's <strong>data + compute + statistics</strong>, scaled to an unprecedented degree. Understand how it learns, and you'll know when to trust it.
+      </p>
+      <p class="sub" style="max-width:50ch; margin-top:16px; color:var(--mute);">
+        <strong style="color:var(--g);">Next up · Module 02</strong> — responsibility: bias, hallucinations, and the human in the loop.
+      </p>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: false,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'fade',
+    backgroundTransition: 'none',
+    width: 1280,
+    height: 800,
+    margin: 0.0,
+    minScale: 0.3,
+    maxScale: 2.0,
+  });
+</script>
+</body>
+</html>

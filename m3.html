@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Module 3 — AI Tools of the Trade</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --g:      #00c835;
+      --amber:  #f5a524;
+      --red:    #ef4444;
+      --purple: #b89dd4;
+      --blue:   #5ac8fa;
+      --bg:     #0a0d0f;
+      --panel:  #151a1e;
+      --line:   rgba(255,255,255,0.07);
+      --line2:  rgba(255,255,255,0.14);
+      --ink:    #eef1f2;
+      --ink2:   #c6ced2;
+      --mute:   #6d777d;
+      --mute2:  #424a4f;
+    }
+
+    html, body { background: var(--bg); }
+    .reveal .backgrounds { background: var(--bg); }
+
+    .reveal {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    .reveal .slides { text-align: left; }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5 {
+      text-transform: none !important;
+    }
+
+    .reveal .slides section {
+      padding: 0 !important;
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    .top-rule {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px 14px 48px;
+      border-bottom: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+    .top-rule .brand::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--g);
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .body-area {
+      flex: 1 1 auto;
+      padding: 28px 48px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .body-area.center { justify-content: center; }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: #fff;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin: 0 0 0.3em 0;
+      font-weight: 700;
+    }
+    .reveal h1 { font-size: 1.9em; }
+    .reveal h2 { font-size: 1.35em; }
+    .reveal h3 { font-size: 0.85em; font-weight: 600; }
+
+    .reveal p, .reveal li {
+      font-size: 0.55em;
+      line-height: 1.5;
+      color: var(--ink2);
+      margin: 0.2em 0;
+    }
+    .reveal strong { color: #fff; font-weight: 600; }
+
+    .mono, .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.01em;
+    }
+
+    .reveal .progress { color: var(--g); height: 2px; }
+    .reveal .controls { color: var(--g); }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .note-below {
+      margin-top: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+
+    .cover { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .cover .stack {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4em;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+    .cover .stack .l1 { color: var(--blue); }
+    .cover .stack .l2 { color: var(--amber); }
+    .cover .stack .l3 { color: var(--g); }
+    .cover .stack .sep { color: var(--mute2); font-weight: 300; margin: 0 0.12em; }
+    .cover .sub {
+      margin-top: 20px;
+      font-size: 0.7em;
+      color: var(--ink2);
+      max-width: 44ch;
+      font-weight: 300;
+      line-height: 1.45;
+    }
+    .cover .sub strong { color: #fff; font-weight: 600; }
+
+    .divider {
+      height: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 40px;
+    }
+    .divider .ghost {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 7.5em;
+      font-weight: 700;
+      line-height: 0.85;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--line2);
+      user-select: none;
+    }
+    .divider .body-col .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--g);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .divider .body-col h2 {
+      font-size: 1.8em;
+      line-height: 1.05;
+      max-width: 18ch;
+    }
+    .divider .body-col h2 .hi { color: var(--g); }
+    .divider .body-col .sub {
+      margin-top: 12px;
+      max-width: 44ch;
+      color: var(--mute);
+      font-size: 0.62em;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6em;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      max-width: 26ch;
+      color: #fff;
+    }
+    .headline .hi { color: var(--g); }
+    .headline .hi-a { color: var(--amber); }
+    .headline .hi-b { color: var(--blue); }
+
+    .lede {
+      margin-top: 18px;
+      font-size: 0.62em;
+      color: var(--mute);
+      max-width: 56ch;
+      font-weight: 300;
+      line-height: 1.55;
+    }
+    .lede strong { color: var(--ink); font-weight: 500; }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .cap-grid.three { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .cap-grid.two { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .cap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 14px 16px;
+      border-radius: 3px;
+    }
+    .cap .n {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--g);
+      letter-spacing: 0.22em;
+      margin-bottom: 6px;
+    }
+    .cap h3 { font-size: 0.72em; margin: 0 0 6px 0; line-height: 1.15; }
+    .cap p { font-size: 0.44em; color: var(--mute); line-height: 1.45; margin: 0; }
+    .cap.approved { border-top: 2px solid var(--g); }
+    .cap.approved .n { color: var(--g); }
+    .cap.public { border-top: 2px solid var(--amber); }
+    .cap.public .n { color: var(--amber); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 14px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      padding: 18px 20px;
+    }
+    .panel .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 10px;
+    }
+    .panel.amber .k { color: var(--amber); }
+    .panel.red .k { color: var(--red); }
+    .panel h3 { font-size: 0.85em; margin: 0 0 10px 0; }
+    .panel p, .panel li { font-size: 0.52em; }
+    .panel code {
+      display: block;
+      font-size: 0.5em;
+      color: var(--ink);
+      background: #0a0d0f;
+      padding: 10px 12px;
+      margin-top: 10px;
+      border-left: 2px solid var(--g);
+      white-space: pre-wrap;
+      line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .panel.amber code { border-left-color: var(--amber); }
+
+    .slogan {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3em;
+      line-height: 1.45;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+    }
+    .slogan .ln {
+      display: grid;
+      grid-template-columns: 9em 1fr;
+      align-items: baseline;
+      gap: 16px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .slogan .ln:last-child { border-bottom: none; }
+    .slogan .ln .who { font-weight: 700; }
+    .slogan .ln .verb { color: var(--mute); font-weight: 300; font-style: italic; font-size: 0.7em; }
+    .slogan .c1 .who { color: var(--blue); }
+    .slogan .c2 .who { color: var(--amber); }
+    .slogan .c3 .who { color: var(--g); }
+    .slogan .c4 .who { color: var(--purple); }
+
+    .tool-detail {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 36px;
+      align-items: start;
+      margin-top: 8px;
+    }
+    .tool-detail .left .tool-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+    .tool-detail .left h2 {
+      font-size: 2em;
+      line-height: 0.95;
+      margin: 6px 0 8px 0;
+    }
+    .tool-detail .left .analogy {
+      font-size: 0.6em;
+      color: var(--ink2);
+      font-weight: 300;
+      font-style: italic;
+      max-width: 28ch;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .tool-detail .left .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .tool-detail .left .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+    .tool-detail .left .badge.approved { background: rgba(0,200,53,0.15); color: var(--g); border: 1px solid var(--g); }
+    .tool-detail .left .badge.caution { background: rgba(245,165,36,0.12); color: var(--amber); border: 1px solid rgba(245,165,36,0.4); }
+
+    .tool-detail .right .row {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .tool-detail .right .row:first-child { padding-top: 0; }
+    .tool-detail .right .row:last-child { border-bottom: none; }
+    .tool-detail .right .row .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 6px;
+    }
+    .tool-detail .right .row .v {
+      font-size: 0.56em;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    .tool-detail .right .row .v strong { color: #fff; }
+
+    .pull {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5em;
+      line-height: 1.25;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: -0.025em;
+      max-width: 30ch;
+      position: relative;
+    }
+    .pull::before {
+      content: "\201C";
+      position: absolute;
+      left: -26px;
+      top: -16px;
+      font-size: 2em;
+      color: var(--g);
+      line-height: 1;
+    }
+    .pull .hi { color: var(--g); }
+    .pull-attr {
+      margin-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--mute);
+      text-transform: uppercase;
+    }
+
+    .reveal table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.5em;
+    }
+    .reveal th, .reveal td {
+      padding: 8px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    .reveal th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute);
+      font-weight: 500;
+      padding-top: 0;
+    }
+    .reveal td { color: var(--ink2); }
+    .reveal td strong { color: #fff; }
+    .reveal tbody tr:last-child td { border-bottom: none; }
+    .reveal td.g { color: var(--g); }
+    .reveal td.r { color: var(--red); }
+    .reveal td.a { color: var(--amber); }
+
+    .reveal ul { list-style: none; padding: 0; margin: 0.3em 0; }
+    .reveal ul li { padding-left: 14px; position: relative; margin: 6px 0; }
+    .reveal ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.7em;
+      width: 8px; height: 1px;
+      background: var(--g);
+    }
+
+    .prompt-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 14px;
+    }
+    .prompt-compare .box {
+      padding: 16px 18px;
+      border-radius: 3px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+    .prompt-compare .box.bad { border-left: 2px solid var(--red); }
+    .prompt-compare .box.good { border-left: 2px solid var(--g); }
+    .prompt-compare .box .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--mute);
+    }
+    .prompt-compare .box.bad .tag { color: var(--red); }
+    .prompt-compare .box.good .tag { color: var(--g); }
+    .prompt-compare .box p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5em;
+      color: var(--ink);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .end-mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      color: var(--g);
+      margin-bottom: 14px;
+    }
+
+    .realworld-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .rw {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 2px solid var(--blue);
+      padding: 14px 16px;
+      border-radius: 3px;
+    }
+    .rw.g { border-top-color: var(--g); }
+    .rw.a { border-top-color: var(--amber); }
+    .rw.p { border-top-color: var(--purple); }
+    .rw.b { border-top-color: var(--blue); }
+    .rw.r { border-top-color: var(--red); }
+    .rw .cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .rw.g .cat { color: var(--g); }
+    .rw.a .cat { color: var(--amber); }
+    .rw.p .cat { color: var(--purple); }
+    .rw.b .cat { color: var(--blue); }
+    .rw.r .cat { color: var(--red); }
+    .rw p { font-size: 0.46em; color: var(--mute); line-height: 1.5; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 01 COVER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">AI Foundations · Module 03</span>
+    <span>April 2026</span>
+  </div>
+  <div class="body-area">
+    <div class="cover">
+      <div class="stack">
+        <span class="l1">Prompt.</span><span class="sep">·</span><span class="l2">Choose.</span><span class="sep">·</span><span class="l3">Verify.</span>
+      </div>
+      <p class="sub">AI tools of the trade — how to talk to them, how to pick between them, and <strong>how to get reliable output</strong> from each.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 AGENDA -->
+<section>
+  <div class="top-rule">
+    <span class="brand">What we'll cover</span>
+    <span>02 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Agenda</span>
+    <h2>From prompting, to choosing the right tool, to using it safely.</h2>
+    <div class="cap-grid three" style="margin-top:22px;">
+      <div class="cap"><div class="n">01</div><h3>The art of prompting</h3><p>Role, task, format, constraints. Zero-shot vs. few-shot. Why specificity wins.</p></div>
+      <div class="cap"><div class="n">02</div><h3>The tool ecosystem</h3><p>What's out there, what's approved, and a framework for choosing.</p></div>
+      <div class="cap"><div class="n">03</div><h3>Four tools up close</h3><p>Gemini · NotebookLM · ChatGPT · Claude. When to use which.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 DIVIDER 01 — prompting -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part One</span>
+    <span>03 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">01</div>
+      <div class="body-col">
+        <div class="tag">Part One · Prompting</div>
+        <h2>How you ask <span class="hi">changes the answer</span>.</h2>
+        <p class="sub">Prompting isn't typing — it's briefing. Treat the model like a capable freelancer who just walked into the room and knows nothing about your context.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PROMPT PATTERNS -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Prompt patterns</span>
+    <span>04 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Four levers to pull</span>
+    <h2>Every good prompt sets at least one of these.</h2>
+    <div class="cap-grid">
+      <div class="cap"><div class="n">01 · ROLE</div><h3>Who is the AI?</h3><p>"You are an expert chef" · "Act as a senior Java reviewer" · "Respond as a UX writer."</p></div>
+      <div class="cap"><div class="n">02 · TASK</div><h3>What should it do?</h3><p>"Summarize in 3 bullets" · "Rewrite for tone" · "List the counter-arguments."</p></div>
+      <div class="cap"><div class="n">03 · FORMAT</div><h3>How should it answer?</h3><p>"Explain like I'm 10" · "Return JSON with keys X, Y, Z" · "Use a table."</p></div>
+      <div class="cap"><div class="n">04 · CONSTRAINTS</div><h3>What must it avoid?</h3><p>"Under 200 words" · "No bullet lists" · "Avoid the word quantum."</p></div>
+    </div>
+    <p class="note-below">The most common mistake: being too vague. "Write something about dogs" is not a brief — it's a wish.</p>
+  </div>
+</section>
+
+<!-- 05 ZERO-SHOT vs FEW-SHOT -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Zero-shot vs. few-shot</span>
+    <span>05 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">When to show examples</span>
+    <h2>Show, don't just tell — especially when the task is nuanced.</h2>
+    <div class="two-col">
+      <div class="panel">
+        <div class="k">Zero-shot</div>
+        <h3>No examples. Just the instruction.</h3>
+        <code>Translate this to French:
+Hello, how are you?</code>
+        <p style="margin-top:10px;"><strong>Works well for:</strong> simple, common tasks where the model already knows the pattern.</p>
+      </div>
+      <div class="panel amber">
+        <div class="k">Few-shot</div>
+        <h3>Instruction plus a few examples.</h3>
+        <code>Write a product review:
+- Wireless headphones
+  → Great sound, comfortable fit.
+- Coffee maker
+  → Easy to use, makes excellent coffee.
+- Smartphone case
+  → ?</code>
+        <p style="margin-top:10px;"><strong>Works well for:</strong> specific tone, unusual format, domain-specific patterns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 PROMPT BEFORE/AFTER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Vague vs. specific</span>
+    <span>06 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">The same task, rewritten</span>
+    <h2>Specificity costs you ten seconds — and saves you three rewrites.</h2>
+    <div class="prompt-compare">
+      <div class="box bad">
+        <div class="tag">✕ Suboptimal</div>
+        <p>Write about dogs.</p>
+      </div>
+      <div class="box good">
+        <div class="tag">✓ Better</div>
+        <p>Write a 200-word blog post about training puppies for first-time owners. Warm, encouraging tone.</p>
+      </div>
+      <div class="box bad">
+        <div class="tag">✕ Suboptimal</div>
+        <p>Fix this code.</p>
+      </div>
+      <div class="box good">
+        <div class="tag">✓ Better</div>
+        <p>Debug this Python function that should calculate Fibonacci numbers but returns incorrect values for n &gt; 10: [code]</p>
+      </div>
+    </div>
+    <p class="note-below">Security first: never paste client data, passwords, keys, or proprietary code into public AI tools without explicit IT Security approval.</p>
+  </div>
+</section>
+
+<!-- 07 DIVIDER 02 — ecosystem -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part Two</span>
+    <span>07 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">02</div>
+      <div class="body-col">
+        <div class="tag">Part Two · The ecosystem</div>
+        <h2>Many tools. <span class="hi">Few decisions</span>.</h2>
+        <p class="sub">You don't need to master everything. You need to know which tool fits which job — and which ones are approved for which data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 LANDSCAPE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The landscape</span>
+    <span>08 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">General-purpose · research · specialized</span>
+    <h2>The tools most people will meet.</h2>
+    <div class="cap-grid">
+      <div class="cap approved"><div class="n">GENERAL · LLM</div><h3>ChatGPT · GPT-5</h3><p>OpenAI · creative, reasoning, coding, agent mode.</p></div>
+      <div class="cap approved"><div class="n">GENERAL · LLM</div><h3>Claude 4</h3><p>Anthropic · up to 1M context, strong coding, Computer Use.</p></div>
+      <div class="cap approved"><div class="n">GENERAL · LLM</div><h3>Gemini 2.5</h3><p>Google · multimodal, real-time web, Workspace integration.</p></div>
+      <div class="cap public"><div class="n">RESEARCH</div><h3>NotebookLM</h3><p>Google · source-grounded, multi-doc synthesis, citations.</p></div>
+      <div class="cap public"><div class="n">RESEARCH</div><h3>Perplexity</h3><p>Search-native · cited answers, deep-research mode.</p></div>
+      <div class="cap public"><div class="n">OPEN · LLM</div><h3>DeepSeek · Llama 4</h3><p>Open-source friendly · competitive on technical tasks.</p></div>
+      <div class="cap public"><div class="n">SPECIALIZED</div><h3>Midjourney · DALL·E · Flux</h3><p>Image generation — artistic, prompt-literal, photorealistic.</p></div>
+      <div class="cap public"><div class="n">SPECIALIZED</div><h3>GitHub Copilot · Cursor · ElevenLabs</h3><p>Code completion · AI-native IDE · voice synthesis.</p></div>
+    </div>
+    <p class="note-below">Green = general-purpose assistants you'll use daily. Amber = tools you'll reach for when a task calls for them.</p>
+  </div>
+</section>
+
+<!-- 09 DATA CLASSIFICATION -->
+<section>
+  <div class="top-rule">
+    <span class="brand">What goes where</span>
+    <span>09 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">Data classification for AI tools</span>
+    <h2>One table. Memorize it.</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Data type</th>
+          <th>Consumer AI (ChatGPT, Gemini free)</th>
+          <th>Enterprise tier (Business, Team, Workspace)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Public information</strong></td><td class="g">Allowed</td><td class="g">Allowed</td></tr>
+        <tr><td><strong>Personal non-sensitive</strong></td><td class="a">Strip identifying details</td><td class="g">Allowed</td></tr>
+        <tr><td><strong>Work / client data</strong></td><td class="r">Never</td><td class="a">With employer's approval</td></tr>
+        <tr><td><strong>Health, finance, biometrics</strong></td><td class="r">Never</td><td class="a">With explicit consent</td></tr>
+        <tr><td><strong>Passwords · API keys · credentials</strong></td><td class="r">Never</td><td class="r">Never</td></tr>
+      </tbody>
+    </table>
+    <p class="note-below">Enterprise tiers typically exclude your data from training and add compliance controls. Consumer tiers may not. Check the settings.</p>
+  </div>
+</section>
+
+<!-- 10 DIVIDER 03 — four tools -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Part Three</span>
+    <span>10 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="divider">
+      <div class="ghost">03</div>
+      <div class="body-col">
+        <div class="tag">Part Three · Four tools up close</div>
+        <h2>Gemini · NotebookLM · ChatGPT · <span class="hi">Claude</span>.</h2>
+        <p class="sub">What each does well, where it fits, and when to reach for it instead of the others.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 GEMINI -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Tool · Gemini</span>
+    <span>11 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="tool-detail">
+      <div class="left">
+        <div class="tool-num">Tool 01 · Google</div>
+        <h2 style="color:var(--blue);">Gemini</h2>
+        <p class="analogy">A multimodal research assistant with a live feed of the web.</p>
+        <div class="badges">
+          <span class="badge approved">general-purpose</span>
+          <span class="badge caution">check retention settings</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="row">
+          <div class="k">What it does well</div>
+          <div class="v">Real-time web access · multimodal (text, images, docs) · native Workspace integration · built-in citations.</div>
+        </div>
+        <div class="row">
+          <div class="k">Where to reach for it</div>
+          <div class="v">Current events and regulation research · analyzing Google Drive files directly · image analysis for business uses · Deep Research for multi-hour synthesis.</div>
+        </div>
+        <div class="row">
+          <div class="k">Watch out for</div>
+          <div class="v"><strong>Workspace / Business accounts</strong> — chats may be retained as company property. No temporary mode in all tiers. Treat as if everything is logged.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 NOTEBOOKLM -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Tool · NotebookLM</span>
+    <span>12 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="tool-detail">
+      <div class="left">
+        <div class="tool-num">Tool 02 · Google</div>
+        <h2 style="color:var(--amber);">NotebookLM</h2>
+        <p class="analogy">A research partner that reads your sources and cites them back.</p>
+        <div class="badges">
+          <span class="badge approved">research-grade</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="row">
+          <div class="k">What it does well</div>
+          <div class="v">Source-grounded answers — minimal hallucinations when working from your uploaded documents · multi-document synthesis · automatic citations · web Discover to find adjacent sources.</div>
+        </div>
+        <div class="row">
+          <div class="k">Where to reach for it</div>
+          <div class="v">Academic research across many papers · meeting notes and project documentation synthesis · anywhere you need <strong>exact citations</strong> and traceable claims.</div>
+        </div>
+        <div class="row">
+          <div class="k">Signature feature</div>
+          <div class="v">Output formats beyond chat: mind maps, audio podcast summaries, video walkthroughs — useful for handing off research to teammates.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 CHATGPT -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Tool · ChatGPT</span>
+    <span>13 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="tool-detail">
+      <div class="left">
+        <div class="tool-num">Tool 03 · OpenAI</div>
+        <h2 style="color:var(--g);">ChatGPT</h2>
+        <p class="analogy">A versatile creative partner — and a coding collaborator.</p>
+        <div class="badges">
+          <span class="badge caution">public tool · no client data</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="row">
+          <div class="k">What it does well</div>
+          <div class="v">Creative writing with tone and audience control · strong reasoning and explanation · code generation and debugging · custom GPTs that bundle instructions and knowledge.</div>
+        </div>
+        <div class="row">
+          <div class="k">Where to reach for it</div>
+          <div class="v">Drafting marketing copy, emails, and presentations · writing and explaining code · brainstorming and strategic thinking · image analysis and creative Q&amp;A.</div>
+        </div>
+        <div class="row">
+          <div class="k">Watch out for</div>
+          <div class="v"><strong>Default: your data trains the model.</strong> Turn this off under Settings → Data Controls if you haven't already. Never paste client, proprietary, or sensitive company data.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 CLAUDE -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Tool · Claude</span>
+    <span>14 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="tool-detail">
+      <div class="left">
+        <div class="tool-num">Tool 04 · Anthropic</div>
+        <h2 style="color:var(--purple);">Claude</h2>
+        <p class="analogy">A thoughtful assistant with an exceptional memory — and a careful nature.</p>
+        <div class="badges">
+          <span class="badge approved">general-purpose</span>
+          <span class="badge approved">up to 1M context</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="row">
+          <div class="k">What it does well</div>
+          <div class="v">Very long documents (up to 1M tokens — a small book) · careful reasoning and nuanced writing · strong coding and code review · Computer Use for early agentic tasks · Projects for persistent, scoped context.</div>
+        </div>
+        <div class="row">
+          <div class="k">Where to reach for it</div>
+          <div class="v">Analyzing a full contract, thesis, or codebase in one pass · long-form writing and editing · anywhere you want the model to <strong>say "I don't know"</strong> instead of making something up.</div>
+        </div>
+        <div class="row">
+          <div class="k">Signature feature</div>
+          <div class="v">Strong default refusal behavior on sensitive topics — which is a feature for consequential work and a friction for creative exploration. Know which side you're on before you start.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 WHICH-TOOL SLOGAN -->
+<section>
+  <div class="top-rule">
+    <span class="brand">The one-line decision</span>
+    <span>15 / 17</span>
+  </div>
+  <div class="body-area center">
+    <span class="eyebrow">A shortcut for picking the right tool</span>
+    <div class="slogan">
+      <div class="ln c1"><span class="who">Gemini</span><span class="verb">when you need <strong>current</strong> information from the web.</span></div>
+      <div class="ln c2"><span class="who">NotebookLM</span><span class="verb">when you need <strong>cited</strong> answers from your own documents.</span></div>
+      <div class="ln c3"><span class="who">ChatGPT</span><span class="verb">when you need <strong>creative</strong> writing or coding — with public data only.</span></div>
+      <div class="ln c4"><span class="who">Claude</span><span class="verb">when the <strong>document is long</strong> or the reasoning has to be careful.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 REAL-WORLD -->
+<section>
+  <div class="top-rule">
+    <span class="brand">Where AI already is</span>
+    <span>16 / 17</span>
+  </div>
+  <div class="body-area">
+    <span class="eyebrow">You likely interact with 20+ AI systems daily</span>
+    <h2>AI in the applications you already use.</h2>
+    <div class="realworld-grid">
+      <div class="rw g">
+        <div class="cat">Productivity</div>
+        <p>Smart compose · priority inbox · meeting scheduling · auto-transcription · smart summaries.</p>
+      </div>
+      <div class="rw b">
+        <div class="cat">Learning</div>
+        <p>Duolingo lessons · Khan Academy tutors · Grammarly style and grammar suggestions.</p>
+      </div>
+      <div class="rw r">
+        <div class="cat">Healthcare</div>
+        <p>Skin-cancer detection apps · therapy chatbots · personalized workout programs.</p>
+      </div>
+      <div class="rw a">
+        <div class="cat">Finance</div>
+        <p>Fraud detection · robo-advisors · expense categorization · automated claims triage.</p>
+      </div>
+      <div class="rw p">
+        <div class="cat">Entertainment</div>
+        <p>Netflix · Spotify recommendations · adaptive game difficulty · content curation.</p>
+      </div>
+      <div class="rw g">
+        <div class="cat">Work</div>
+        <p>Resume screening · sentiment analysis · ticket routing · copywriting and design assistance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 CLOSER -->
+<section>
+  <div class="top-rule">
+    <span class="brand">End of Module 03</span>
+    <span>17 / 17</span>
+  </div>
+  <div class="body-area">
+    <div class="cover">
+      <div class="end-mark">// TAKE HOME</div>
+      <div class="stack" style="font-size:1.9em;">
+        <span class="l1">Be specific.</span><br/>
+        <span class="l2">Pick the right tool.</span><br/>
+        <span class="l3">Verify what comes back.</span>
+      </div>
+      <p class="sub" style="max-width:52ch;">
+        AI is a capability multiplier — but only if you <strong>brief it like a professional</strong>, choose a tool that fits the data, and stay the final authority on what ships.
+      </p>
+      <p class="sub" style="max-width:54ch; margin-top:16px; color:var(--mute);">
+        <strong style="color:var(--g);">Next up · Module 04</strong> — agents, synthetic media, your work, your rights. The same tools, at society scale.
+      </p>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: false,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'fade',
+    backgroundTransition: 'none',
+    width: 1280,
+    height: 800,
+    margin: 0.0,
+    minScale: 0.3,
+    maxScale: 2.0,
+  });
+</script>
+</body>
+</html>

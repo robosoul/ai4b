@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 4 B — A foundation for the next decade of software</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --g:      #00c835;
+      --amber:  #f5a524;
+      --red:    #ef4444;
+      --purple: #b89dd4;
+      --blue:   #5ac8fa;
+      --bg:     #0a0d0f;
+      --panel:  #151a1e;
+      --panel2: #1a2025;
+      --line:   rgba(255,255,255,0.07);
+      --line2:  rgba(255,255,255,0.14);
+      --ink:    #eef1f2;
+      --ink2:   #c6ced2;
+      --mute:   #6d777d;
+      --mute2:  #424a4f;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      letter-spacing: -0.005em;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* top rule */
+    .top-rule {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0 18px 0;
+      border-bottom: 1px solid var(--line);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+    .top-rule .brand::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--g);
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    /* hero */
+    .hero {
+      padding: 84px 0 56px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--g);
+      margin-bottom: 24px;
+    }
+    .hero .stack {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(56px, 10vw, 140px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+      margin: 0;
+    }
+    .hero .stack .ai { color: var(--blue); }
+    .hero .stack .four { color: var(--amber); }
+    .hero .stack .b { color: var(--g); }
+    .hero .stack .sep { color: var(--mute2); font-weight: 300; margin: 0 0.12em; }
+
+    .hero .sub {
+      margin-top: 32px;
+      font-size: 20px;
+      color: var(--ink2);
+      max-width: 42ch;
+      font-weight: 300;
+      line-height: 1.45;
+    }
+    .hero .sub strong { color: #fff; font-weight: 600; }
+
+    .hero .intro {
+      margin-top: 36px;
+      font-size: 15px;
+      color: var(--mute);
+      max-width: 68ch;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .hero .intro strong { color: var(--ink); font-weight: 500; }
+
+    /* modules */
+    .modules {
+      padding: 64px 0 40px 0;
+    }
+    .modules-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.025em;
+      margin: 0 0 12px 0;
+    }
+    .modules-lede {
+      font-size: 15px;
+      color: var(--mute);
+      max-width: 60ch;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero { padding: 56px 0 40px 0; }
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 2px solid var(--g);
+      padding: 28px 28px 24px 28px;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+    }
+    .card.c1 { border-top-color: var(--blue); }
+    .card.c2 { border-top-color: var(--amber); }
+    .card.c3 { border-top-color: var(--g); }
+    .card.c4 { border-top-color: var(--purple); }
+
+    .card:hover {
+      background: var(--panel2);
+      transform: translateY(-2px);
+    }
+
+    .card .mod-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 12px;
+    }
+    .card.c1 .mod-num { color: var(--blue); }
+    .card.c2 .mod-num { color: var(--amber); }
+    .card.c3 .mod-num { color: var(--g); }
+    .card.c4 .mod-num { color: var(--purple); }
+
+    .card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .card .analogy {
+      font-size: 13px;
+      color: var(--mute);
+      font-style: italic;
+      margin-bottom: 18px;
+      font-weight: 300;
+    }
+    .card .summary {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.6;
+      margin: 0 0 18px 0;
+    }
+    .card .topics {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px 0;
+    }
+    .card .topics li {
+      position: relative;
+      padding-left: 14px;
+      margin: 4px 0;
+      font-size: 13px;
+      color: var(--mute);
+      line-height: 1.45;
+    }
+    .card .topics li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.7em;
+      width: 8px; height: 1px;
+      background: var(--g);
+    }
+    .card.c1 .topics li::before { background: var(--blue); }
+    .card.c2 .topics li::before { background: var(--amber); }
+    .card.c3 .topics li::before { background: var(--g); }
+    .card.c4 .topics li::before { background: var(--purple); }
+
+    .card .cta {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card .cta .open {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--g);
+    }
+    .card.c1 .cta .open { color: var(--blue); }
+    .card.c2 .cta .open { color: var(--amber); }
+    .card.c4 .cta .open { color: var(--purple); }
+    .card .cta .open::after {
+      content: " →";
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+    .card:hover .cta .open::after { transform: translateX(4px); }
+    .card .cta .meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mute2);
+    }
+
+    /* closer */
+    .closer {
+      padding: 72px 0 40px 0;
+      border-top: 1px solid var(--line);
+      margin-top: 48px;
+    }
+    .closer .tagline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      max-width: 28ch;
+      margin: 0 0 24px 0;
+    }
+    .closer .tagline .hi { color: var(--g); }
+    .closer p {
+      font-size: 15px;
+      color: var(--mute);
+      max-width: 56ch;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* foot */
+    .foot {
+      padding: 32px 0 48px 0;
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mute2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .foot a { color: var(--mute); }
+    .foot a:hover { color: var(--g); }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-rule">
+    <span class="brand">AI Foundations · For Branka</span>
+    <span>April 2026</span>
+  </div>
+
+  <section class="hero">
+    <div class="eyebrow">A four-part briefing</div>
+    <h1 class="stack">
+      <span class="ai">AI</span><span class="sep">·</span><span class="four">4</span><span class="sep">·</span><span class="b">B.</span>
+    </h1>
+    <p class="sub">A foundation for the next decade of software — <strong>made for Branka</strong>, built to be watched at your own pace.</p>
+    <p class="intro">
+      Four short, self-contained modules. <strong>Roughly 15 – 20 minutes each.</strong> Use arrow keys or swipe to move through the slides. Start anywhere, but they read best in order — each one builds on the last. By the end you'll know the vocabulary, the limits, the tools, and your rights. Nothing technical required.
+    </p>
+  </section>
+
+  <section class="modules">
+    <h2 class="modules-title">The four modules.</h2>
+    <p class="modules-lede">Each module is a self-contained deck. Click through. Skim. Revisit.</p>
+
+    <div class="grid">
+
+      <a class="card c1" href="m1.html">
+        <div class="mod-num">Module 01</div>
+        <h3>Demystifying AI</h3>
+        <div class="analogy">Where it came from. What the words mean.</div>
+        <p class="summary">
+          How we got here, what AI / ML / DL / GenAI actually mean, and how today's LLMs work under the hood — from training to the answer on your screen.
+        </p>
+        <ul class="topics">
+          <li>Three eras of AI · why this wave didn't crash</li>
+          <li>ANI, AGI, ASI · the nested family tree</li>
+          <li>Training vs. inference · context windows · cutoffs</li>
+          <li>The true cost — money, time, carbon</li>
+        </ul>
+        <div class="cta">
+          <span class="open">Open module</span>
+          <span class="meta">18 slides</span>
+        </div>
+      </a>
+
+      <a class="card c2" href="m2.html">
+        <div class="mod-num">Module 02</div>
+        <h3>Responsible AI</h3>
+        <div class="analogy">The human in the loop. Why it's still you.</div>
+        <p class="summary">
+          When AI decides on loans, hires, and diagnoses — someone still has to be accountable. The ethical foundations, the real-world failures, and the rules for sharing data safely.
+        </p>
+        <ul class="topics">
+          <li>Bias and hallucinations · where they come from</li>
+          <li>Six ethical principles · six guardrail layers</li>
+          <li>Case studies · Amazon's hiring AI, Microsoft Tay</li>
+          <li>The black box problem · what you can and can't paste</li>
+        </ul>
+        <div class="cta">
+          <span class="open">Open module</span>
+          <span class="meta">16 slides</span>
+        </div>
+      </a>
+
+      <a class="card c3" href="m3.html">
+        <div class="mod-num">Module 03</div>
+        <h3>AI Tools of the Trade</h3>
+        <div class="analogy">How to talk to them. How to pick between them.</div>
+        <p class="summary">
+          Prompting like a professional, a tour of the ecosystem, and four deep dives — ChatGPT, Claude, Gemini, NotebookLM — so you know exactly which tool fits which task.
+        </p>
+        <ul class="topics">
+          <li>Role · task · format · constraints · zero- vs. few-shot</li>
+          <li>The tool landscape · what's where in 2026</li>
+          <li>Data classification · consumer vs. enterprise tiers</li>
+          <li>Four tools up close — and a one-line tool picker</li>
+        </ul>
+        <div class="cta">
+          <span class="open">Open module</span>
+          <span class="meta">17 slides</span>
+        </div>
+      </a>
+
+      <a class="card c4" href="m4.html">
+        <div class="mod-num">Module 04</div>
+        <h3>AI in Society</h3>
+        <div class="analogy">Agents. Deepfakes. Your work. Your rights.</div>
+        <p class="summary">
+          The parts that affect you as an everyday user — not as an engineer. The agentic shift, synthetic media, how work is changing, and what the EU AI Act actually gives you.
+        </p>
+        <ul class="topics">
+          <li>Bot → Copilot → Agent · the 2025 shift</li>
+          <li>Deepfakes and voice clones · a five-rule playbook</li>
+          <li>Your job, changed · automate / amplify / stay human</li>
+          <li>EU AI Act · copyright · consent · your rights</li>
+        </ul>
+        <div class="cta">
+          <span class="open">Open module</span>
+          <span class="meta">19 slides</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="closer">
+    <h2 class="tagline">Know the words. <br/>Respect the limits. <span class="hi">Own the decision.</span></h2>
+    <p>
+      AI is not something happening to you. It's something you participate in — as a worker, a user, a voter, a consumer. Participate deliberately. And enjoy it.
+    </p>
+  </section>
+
+  <div class="foot">
+    <span>Made with care · April 2026</span>
+    <span>Use arrow keys in each deck · F for fullscreen · ESC for overview</span>
+  </div>
+
+</div>
+
+</body>
+</html>
