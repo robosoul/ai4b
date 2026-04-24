@@ -278,6 +278,92 @@
       font-weight: 300;
     }
 
+    /* bonus */
+    .bonus {
+      padding: 56px 0 24px 0;
+      border-top: 1px solid var(--line);
+      margin-top: 48px;
+    }
+    .bonus .bonus-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 18px;
+    }
+    .bonus h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.025em;
+      margin: 0 0 12px 0;
+    }
+    .bonus .bonus-lede {
+      font-size: 15px;
+      color: var(--mute);
+      max-width: 62ch;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .bonus-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 2px solid var(--amber);
+      padding: 28px 32px;
+      border-radius: 3px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .bonus-card:hover { background: var(--panel2); transform: translateY(-2px); }
+    .bonus-card .b-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 10px;
+    }
+    .bonus-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .bonus-card h3 .sl { color: var(--blue); }
+    .bonus-card h3 .sl2 { color: var(--amber); }
+    .bonus-card h3 .sl3 { color: var(--g); }
+    .bonus-card .b-desc {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.55;
+      margin: 0;
+      max-width: 62ch;
+    }
+    .bonus-card .cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      white-space: nowrap;
+    }
+    .bonus-card .cta::after {
+      content: " →";
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+    .bonus-card:hover .cta::after { transform: translateX(4px); }
+    @media (max-width: 760px) {
+      .bonus-card { grid-template-columns: 1fr; }
+    }
+
     /* foot */
     .foot {
       padding: 32px 0 48px 0;
@@ -408,6 +494,23 @@
     <p>
       AI is not something happening to you. It's something you participate in — as a worker, a user, a voter, a consumer. Participate deliberately. And enjoy it.
     </p>
+  </section>
+
+  <section class="bonus">
+    <div class="bonus-tag">Bonus · deeper cut</div>
+    <h2>For the manager in the family.</h2>
+    <p class="bonus-lede">A separate briefing written for people who decide — not people who code. Stat-heavy, case-study driven, and opinionated. Reads in about twenty-five minutes.</p>
+
+    <a class="bonus-card" href="bonus-agents.html">
+      <div>
+        <div class="b-num">Bonus · 23 slides</div>
+        <h3><span class="sl">Bot.</span> <span class="sl2">Copilot.</span> <span class="sl3">Agent.</span></h3>
+        <p class="b-desc">
+          What has changed, why it matters, and where to start — for the people who decide. Real company case studies (JPMorgan, Siemens, hospitality), the reliability math, and a three-step starting playbook.
+        </p>
+      </div>
+      <span class="cta">Open briefing</span>
+    </a>
   </section>
 
   <div class="foot">
